@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Scanner;
 
 public class UrlConn {
 
@@ -25,18 +24,16 @@ public void url(String urladdr, String name){
              urlconn.connect();
              InputStream in = null;
              in = urlconn.getInputStream();
-             Scanner scanner = new Scanner(in);
              OutputStream writer = new FileOutputStream("C:/Mydir/" + name + ".html");
-             byte buffer[] = new byte[scanner.next().length()];
-             int c = in.read(buffer);
-             while (c > 0) {
-                 writer.write(buffer, 0, c);
-                 c = in.read(buffer);
+             byte buffer[] = new byte[in.read()];
+             int i = in.read(buffer);
+             while (i > 0) {
+                 writer.write(buffer, 0, i);
+                 i = in.read(buffer);
              }
              writer.flush();
              writer.close();
              in.close();
-             scanner.close();
          } catch (IOException e) {
              System.out.println(e);
          }
